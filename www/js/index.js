@@ -31,16 +31,15 @@ function wlCommonInit(){
     var userLoginChallengeHandler = UserLoginChallengeHandler();
     var pinCodeChallengeHandler = PinCodeChallengeHandler();
 
-    // WLAuthorizationManager.obtainAccessToken(userLoginChallengeHandler.securityCheckName).then(
-    //     function (accessToken) {
-    //         WL.Logger.debug("obtainAccessToken onSuccess");
-    //         showProtectedDiv();
-    //     },
-    //     function (response) {
-    //         WL.Logger.debug("obtainAccessToken onFailure: " + JSON.stringify(response));
-    //         showLoginDiv();
-    // });
-    showProtectedDiv();
+    WLAuthorizationManager.obtainAccessToken(userLoginChallengeHandler.securityCheckName).then(
+        function (accessToken) {
+            WL.Logger.debug("obtainAccessToken onSuccess");
+            showProtectedDiv();
+        },
+        function (response) {
+            WL.Logger.debug("obtainAccessToken onFailure: " + JSON.stringify(response));
+            showLoginDiv();
+    });
 }
 
 function showLoginDiv() {
