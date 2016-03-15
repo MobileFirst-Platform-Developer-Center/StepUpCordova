@@ -28,7 +28,7 @@ var wlInitOptions = {
 function wlCommonInit(){
     document.getElementById("getBalance").addEventListener("click", getBalance);
     document.getElementById("transferFunds").addEventListener("click", transferFunds);
-    //var userLoginChallengeHandler = UserLoginChallengeHandler();
+    var userLoginChallengeHandler = UserLoginChallengeHandler();
 
     // WLAuthorizationManager.obtainAccessToken(userLoginChallengeHandler.securityCheckName).then(
     //     function (accessToken) {
