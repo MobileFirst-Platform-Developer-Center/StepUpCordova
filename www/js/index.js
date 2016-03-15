@@ -29,6 +29,7 @@ function wlCommonInit(){
     document.getElementById("getBalance").addEventListener("click", getBalance);
     document.getElementById("transferFunds").addEventListener("click", transferFunds);
     var userLoginChallengeHandler = UserLoginChallengeHandler();
+    var pinCodeChallengeHandler = PinCodeChallengeHandler();
 
     // WLAuthorizationManager.obtainAccessToken(userLoginChallengeHandler.securityCheckName).then(
     //     function (accessToken) {
