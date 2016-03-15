@@ -27,6 +27,7 @@ var wlInitOptions = {
 // Called automatically after MFP framework initialization by WL.Client.init(wlInitOptions).
 function wlCommonInit(){
     document.getElementById("getBalance").addEventListener("click", getBalance);
+    document.getElementById("transferFunds").addEventListener("click", transferFunds);
     //var userLoginChallengeHandler = UserLoginChallengeHandler();
 
     // WLAuthorizationManager.obtainAccessToken(userLoginChallengeHandler.securityCheckName).then(
@@ -55,7 +56,7 @@ function showProtectedDiv() {
     document.getElementById('logout').style.display = 'block';
 }
 
-function getBalance () {
+function getBalance() {
     var resourceRequest = new WLResourceRequest("/adapters/ResourceAdapter/balance", WLResourceRequest.GET);
     resourceRequest.send().then(
         function (response) {
@@ -66,4 +67,20 @@ function getBalance () {
             WL.Logger.debug("Failed to get balance: " + JSON.stringify(response));
             document.getElementById("resultLabel").innerHTML = "Failed to get balance.";
         });
+}
+
+function transferFunds(){
+  var amount = prompt("Enter amount:");
+  if(amount !== null && !isNaN(amount)){
+    var resourceRequest = new WLResourceRequest("/adapters/ResourceAdapter/transfer", WLResourceRequest.POST);
+
+    resourceRequest.sendFormParameters({"amount":amount}).then(
+        function (response) {
+            document.getElementById("resultLabel").innerHTML = "Transfer successful";
+        },
+        function (response) {
+            WL.Logger.debug("Failed to get balance: " + JSON.stringify(response));
+            document.getElementById("resultLabel").innerHTML = "Failed to perform transfer.";
+        });
+  }
 }
