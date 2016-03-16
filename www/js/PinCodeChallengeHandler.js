@@ -26,7 +26,7 @@ var PinCodeChallengeHandler = function(){
           msg =  challenge.errorMsg;
       }
       else{
-          msg = "This data requires a PIN code.";
+          msg = "Enter PIN code:";
       }
 
       // Display a prompt for user to enter the pin code
