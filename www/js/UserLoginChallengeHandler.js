@@ -19,8 +19,6 @@ var UserLoginChallengeHandler = function() {
     var userLoginChallengeHandler = WL.Client.createWLChallengeHandler(securityCheckName);
 
     document.getElementById("login").addEventListener("click", login);
-    document.getElementById("logout").addEventListener("click", logout);
-
     userLoginChallengeHandler.securityCheckName = securityCheckName;
 
     userLoginChallengeHandler.handleChallenge = function(challenge) {
@@ -71,17 +69,6 @@ var UserLoginChallengeHandler = function() {
                     WL.Logger.debug("login onFailure: " + JSON.stringify(response));
                 });
         }
-    }
-
-    function logout() {
-    WLAuthorizationManager.logout(securityCheckName).then(
-        function () {
-            WL.Logger.debug("logout onSuccess");
-            location.reload();
-        },
-        function (response) {
-            WL.Logger.debug("logout onFailure: " + JSON.stringify(response));
-        });
     }
 
     return userLoginChallengeHandler;

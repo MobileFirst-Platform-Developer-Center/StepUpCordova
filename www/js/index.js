@@ -24,12 +24,14 @@ var wlInitOptions = {
     // For initialization options please refer to IBM MobileFirst Platform Foundation Knowledge Center.
 };
 
+var userLoginChallengeHandler, pinCodeChallengeHandler;
 // Called automatically after MFP framework initialization by WL.Client.init(wlInitOptions).
 function wlCommonInit(){
     document.getElementById("getBalance").addEventListener("click", getBalance);
     document.getElementById("transferFunds").addEventListener("click", transferFunds);
-    var userLoginChallengeHandler = UserLoginChallengeHandler();
-    var pinCodeChallengeHandler = PinCodeChallengeHandler();
+    document.getElementById("logout").addEventListener("click", logout);
+    userLoginChallengeHandler = UserLoginChallengeHandler();
+    pinCodeChallengeHandler = PinCodeChallengeHandler();
 
     WLAuthorizationManager.obtainAccessToken(userLoginChallengeHandler.securityCheckName).then(
         function (accessToken) {
@@ -83,4 +85,20 @@ function transferFunds(){
             document.getElementById("resultLabel").innerHTML = "Failed to perform transfer.";
         });
   }
+}
+
+function logout() {
+    WLAuthorizationManager.logout(userLoginChallengeHandler.securityCheckName).then(
+        function () {
+            WL.Logger.debug("logout from userLoginChallengeHandler onSuccess");
+            WLAuthorizationManager.logout(pinCodeChallengeHandler.securityCheckName).then(function () {
+                WL.Logger.debug("logout from pinCodeChallengeHandler onSuccess");
+                location.reload();
+            }, function (error) {
+                WL.Logger.debug("logout from pinCodeChallengeHandler onFailure: " + JSON.stringify(error));
+            });
+        },
+        function (error) {
+            WL.Logger.debug("logout from userLoginChallengeHandler onFailure: " + JSON.stringify(error));
+        });
 }
