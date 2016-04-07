@@ -72,19 +72,26 @@ function getBalance() {
 }
 
 function transferFunds(){
-  var amount = prompt("Enter amount:");
-  if(amount !== null && !isNaN(amount)){
-    var resourceRequest = new WLResourceRequest("/adapters/ResourceAdapter/transfer", WLResourceRequest.POST);
+  //Preemptively check if user is logged in before asking for the amount
+  WLAuthorizationManager.obtainAccessToken(userLoginChallengeHandler.securityCheckName).then(
+      function (accessToken) {
+        var amount = prompt("Enter amount:");
+        if(amount !== null && !isNaN(amount)){
+          var resourceRequest = new WLResourceRequest("/adapters/ResourceAdapter/transfer", WLResourceRequest.POST);
 
-    resourceRequest.sendFormParameters({"amount":amount}).then(
-        function (response) {
-            document.getElementById("resultLabel").innerHTML = "Transfer successful";
-        },
-        function (response) {
-            WL.Logger.debug("Failed to get balance: " + JSON.stringify(response));
-            document.getElementById("resultLabel").innerHTML = "Failed to perform transfer.";
-        });
-  }
+          resourceRequest.sendFormParameters({"amount":amount}).then(
+              function (response) {
+                  document.getElementById("resultLabel").innerHTML = "Transfer successful";
+              },
+              function (response) {
+                  WL.Logger.debug("Failed to get balance: " + JSON.stringify(response));
+                  document.getElementById("resultLabel").innerHTML = "Failed to perform transfer.";
+              });
+        }
+      },
+      function (response) {
+          WL.Logger.debug("obtainAccessToken onFailure: " + JSON.stringify(response));
+  });
 }
 
 function logout() {
