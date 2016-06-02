@@ -15,7 +15,7 @@
 */
 var PinCodeChallengeHandler = function(){
   var securityCheckName = 'StepUpPinCode';
-  var challengeHandler = WL.Client.createWLChallengeHandler(securityCheckName);
+  var challengeHandler = WL.Client.createSecurityCheckChallengeHandler(securityCheckName);
 
   challengeHandler.securityCheckName = securityCheckName;
   challengeHandler.handleChallenge = function(challenge) {
@@ -34,8 +34,8 @@ var PinCodeChallengeHandler = function(){
       if(pinCode){ // calling submitChallengeAnswer with the entered value
           challengeHandler.submitChallengeAnswer({"pin":pinCode});
       }
-      else{ // calling submitFailure in case user pressed the cancel button
-          challengeHandler.submitFailure();
+      else{ // calling cancel in case user pressed the cancel button
+          challengeHandler.cancel();
       }
 
 

@@ -16,7 +16,7 @@
 var UserLoginChallengeHandler = function() {
     var isChallenged = false;
     var securityCheckName = 'StepUpUserLogin';
-    var userLoginChallengeHandler = WL.Client.createWLChallengeHandler(securityCheckName);
+    var userLoginChallengeHandler = WL.Client.createSecurityCheckChallengeHandler(securityCheckName);
 
     document.getElementById("login").addEventListener("click", login);
     userLoginChallengeHandler.securityCheckName = securityCheckName;
@@ -32,8 +32,8 @@ var UserLoginChallengeHandler = function() {
         document.getElementById("statusMsg").innerHTML = statusMsg;
     };
 
-    userLoginChallengeHandler.processSuccess = function(data) {
-        WL.Logger.debug("processSuccess");
+    userLoginChallengeHandler.handleSuccess = function(data) {
+        WL.Logger.debug("handleSuccess");
         isChallenged = false;
         document.getElementById('username').value = "";
         document.getElementById('password').value = "";
