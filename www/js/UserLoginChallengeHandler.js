@@ -45,9 +45,9 @@ var UserLoginChallengeHandler = function() {
         WL.Logger.debug("handleFailure: " + error.failure);
         isChallenged = false;
         if (error.failure !== null){
-            alert(error.failure);
+            navigator.notification.alert(error.failure);
         } else {
-            alert("Failed to login.");
+            navigator.notification.alert("Failed to login.");
         }
     };
 
